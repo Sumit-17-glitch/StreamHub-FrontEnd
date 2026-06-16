@@ -2,10 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/auth.slice";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/api";
 
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,22 +22,10 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(
-                "http://localhost:8000/api/v1/users/login",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-
-                    body: JSON.stringify(userData),
-                }
-            );
-            const data = await response.json();
-            const user = data.data.user;
+            const data = await loginUser(userData);
+            const user = data.user;
             dispatch(login(user));
-            
+            navigate("/");
 
         } catch (error) {
             console.log("Error:", error);
@@ -43,9 +34,9 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-6">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-black px-6">
 
-            <div className="w-full max-w-md bg-gradient-to-br from-gray-900 via-gray-800 to-black px-6 shadow-xl rounded-2xl p-8">
+            <div className="w-full max-w-md bg-linear-to-br from-gray-900 via-gray-800 to-black px-6 shadow-xl rounded-2xl p-8">
 
                 {/* Heading */}
                 <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">

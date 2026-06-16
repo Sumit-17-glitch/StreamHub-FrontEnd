@@ -12,9 +12,9 @@ const Logo = () => {
         >
             {/* Icon */}
             <div className="relative w-12 h-12 p-2">
-                <div className="p-2 absolute inset-0 rounded-4xl bg-gradient-to-br from-blue-500 to-purple-600 "></div>
+                <div className="p-2 absolute inset-0 rounded-4xl bg-linear-to-br from-blue-500 to-purple-600 "></div>
                 <div className="p-2 absolute inset-0 rounded-4xl bg-white flex items-center justify-center shadow-lg">
-                    <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                    <span className="text-2xl font-extrabold bg-linear-to-br from-blue-500 to-purple-600 bg-clip-text text-transparent">
                         SH
                     </span>
                 </div>
