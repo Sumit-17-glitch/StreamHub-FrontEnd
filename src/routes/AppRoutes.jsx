@@ -5,7 +5,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Videos from "../pages/Videos";
 import Layout from "../componets/Layout";
-import ProfileOwner from '../pages/ProfileOwner';
+import Profile from '../pages/Profile';
+import UploadVideo from '../pages/UploadVideo';
 
 function AppRoutes() {
     return (
@@ -15,7 +16,8 @@ function AppRoutes() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/all-videos" element={<Videos />} />
-                <Route path="/profile" element={<ProfileOwner />} />
+                <Route path="/profile/:userName" element={<Profile />} />
+                <Route path='/upload-video' element={<UploadVideo />} />
             </Route>
         </Routes>
     )

@@ -1,5 +1,7 @@
 const API_BASE_URL = "http://localhost:8000/api/v1";
 
+
+//user api calls
 export const loginUser = async (userData) => {
   const response = await fetch(`${API_BASE_URL}/users/login`, {
     method: "POST",
@@ -33,7 +35,7 @@ export const getCurrentUserApi = async () => {
 }; //Api in the name is to differentiate that this function is from api services
 
 export const registerUser = async (formData) => {
-  const response =  await fetch(`${API_BASE_URL}/users/register`, {
+  const response = await fetch(`${API_BASE_URL}/users/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,10 +47,40 @@ export const registerUser = async (formData) => {
   return data.data;
 };
 
+export const getUserChannel = async (userName) => {
+  const response = await fetch(
+    `${API_BASE_URL}/users/get-user-channel/${userName}`,
+    { credentials: "include" },
+  );
+  const data = await response.json();
+  return data.data;
+};
+
+
+// video api calls
 export const getAllVideos = async (page, limit) => {
   const response = await fetch(
     `${API_BASE_URL}/video/get-all-videos?page=${page}&limit=${limit}`,
   );
-  const data = await response.json()
+  const data = await response.json();
   return data.data;
+};
+
+export const publishVideo = async (formData) => {
+  const response = await fetch(`${API_BASE_URL}/video/publish-video`, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+  const data = await response.json();
+  return data.data;
+};
+
+
+// subscription api calls
+export const subscribeToChannel = async (channelUserName) => {
+  const response = await fetch(`${API_BASE_URL}/subscription/toggle-subscribe/${channelUserName}`, {
+    credentials: "include"});
+  const data = await response.json();
+  return data;
 };
