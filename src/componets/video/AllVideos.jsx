@@ -35,6 +35,7 @@ const AllVideos = () => {
                 {videos.map((video) => (    
                     <VideoCard
                         key={video._id}
+                        videoId={video._id}
                         videoFile={video.videoFile.url}
                         thumbnail={video.thumbnail.url}
                         avatar={video.owner.avatar.url}

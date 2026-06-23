@@ -15,7 +15,7 @@ const Header = () => {
 
 
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="bg-white shadow-md sticky top-0 z-50 w-auto">
             {/* Desktop Menu */}
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 

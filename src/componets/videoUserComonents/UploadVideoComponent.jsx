@@ -1,19 +1,20 @@
 // VideoUpload.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { publishVideo } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { useSelector } from "react-redux";
+
 
 function UploadVideoComponent() {
     const navigate = useNavigate();
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
-
-    const [thumbnailPreview, setThumbnailPreview] =
-        useState("");
+    const currentUser = useSelector((state) => state.auth.user);
+    const [thumbnailPreview, setThumbnailPreview] = useState("");
 
     const handleVideoChange = (e) => {
         const file = e.target.files[0];
@@ -34,7 +35,7 @@ function UploadVideoComponent() {
         }
     };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
@@ -47,9 +48,9 @@ function UploadVideoComponent() {
 
         try {
             const data = await publishVideo(formData);
-            if(data){
+            if (data) {
                 navigate(`/profile/${data.owner.userName}`);
-                alert("Video uploaded successfully!");    
+                alert("Video uploaded successfully!");
             }
         } catch (error) {
             console.log(error);
@@ -58,7 +59,13 @@ function UploadVideoComponent() {
         }
     };
 
-    if(loading){
+    useEffect(() => {
+        if (!currentUser) {
+            navigate("/login");
+        }
+    }, []);
+
+    if (loading) {
         return (
             <Loading />
         )

@@ -76,6 +76,17 @@ export const publishVideo = async (formData) => {
   return data.data;
 };
 
+export const getVideobyId = async (videoId) => {
+  const response = await fetch(`${API_BASE_URL}/video/get-video/${videoId}`)
+  const data = await response.json();
+  return data.data;
+}
+
+export const getVideobyUserId = async (owner) => {
+  const response = await fetch(`${API_BASE_URL}/video/get-all-videos-user?userId=${owner}`);
+  const data = await response.json();
+  return data.data;
+}
 
 // subscription api calls
 export const subscribeToChannel = async (channelUserName) => {

@@ -1,13 +1,16 @@
-// VideoCard.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const VideoCard = ({
     thumbnail,
+    videoId,
     avatar,
     title,
     views,
     duration,
 }) => {
+    
+    const navigate = useNavigate();
 
     const formatDuration = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -18,9 +21,14 @@ const VideoCard = ({
             }`;
     };
 
+    const handleClick = () => {
+        navigate(`/video-player/${videoId}`);
+    }
+
     return (
         <div
             className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
+            onClick={handleClick}
         >
 
             {/* Thumbnail */}
