@@ -1,82 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import VideoCard from '../video/VideoCard';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
+import { getUserWatchHistory, getVideobyUserId } from '../../services/api';
 
 
 function MainProfileOfOwner(incomingChannel) {
     const channel = incomingChannel.channel;
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [uploadedVideos, setUploadedVideos] = useState([]);
+    const [watchHistory, setWatchHistory] = useState([]);
 
-    const uploadedVideos = [
-        {
-            _id: 1,
-            title: "React Tutorial",
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-            views: "120K views",
-            duration: 725,
-        },
-        {
-            _id: 2,
-            title: "Node JS Crash Course",
-            thumbnail:
-                "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-            views: "90K views",
-            duration: 840,
-        },
-        {
-            _id: 3,
-            title: "React Tutorial",
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-            views: "120K views",
-            duration: 725,
-        },
-        {
-            _id: 4,
-            title: "Node JS Crash Course",
-            thumbnail:
-                "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-            views: "90K views",
-            duration: 840,
-        },
-    ];
-
-    const watchHistory = [
-        {
-            _id: 1,
-            thumbnail:
-                "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-        },
-        {
-            _id: 2,
-            thumbnail:
-                "https://images.unsplash.com/photo-1537432376769-00aabcfa3731",
-        },
-        {
-            _id: 3,
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-        },
-        {
-            _id: 4,
-            thumbnail:
-                "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-        },
-        {
-            _id: 5,
-            thumbnail:
-                "https://images.unsplash.com/photo-1537432376769-00aabcfa3731",
-        },
-        {
-            _id: 6,
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-        },
-    ];
 
     const handleUploadVideo = () => {
         navigate("/upload-video");
+    }
+
+    useEffect(() => {
+        const fetchUploadedVideosAndWatchHistory = async () => {
+            try {
+                const uploadedVideoResponse = await getVideobyUserId(channel._id);
+                const watchHistoryResponse = await getUserWatchHistory();
+                setUploadedVideos(uploadedVideoResponse);
+                setWatchHistory(watchHistoryResponse);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchUploadedVideosAndWatchHistory();
+    }, [incomingChannel]);
+
+
+    if (loading) {
+        return (
+            <Loading />
+        )
     }
 
     return (
@@ -179,7 +140,8 @@ function MainProfileOfOwner(incomingChannel) {
 
                                     <VideoCard
                                         key={video._id}
-                                        thumbnail={video.thumbnail}
+                                        thumbnail={video.thumbnail.url}
+                                        avatar={channel.avatar.url}
                                         title={video.title}
                                         views={video.views}
                                         duration={video.duration}
@@ -216,7 +178,7 @@ function MainProfileOfOwner(incomingChannel) {
                             >
 
                                 <img
-                                    src={video.thumbnail}
+                                    src={video.thumbnail.url}
                                     alt="history"
                                     className="w-full h-40 object-cover"
                                 />

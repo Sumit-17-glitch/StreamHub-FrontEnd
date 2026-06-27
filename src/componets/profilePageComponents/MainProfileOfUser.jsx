@@ -2,69 +2,16 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "../video/VideoCard";
 import { subscribeToChannel } from "../../services/api";
+import { getVideobyUserId } from "../../services/api";
+
 
 function MainProfileOfUser(incomingChannel) {
     const channel = incomingChannel.channel;
+    console.log("channel: ",channel);
+    
     const [isSubscribed, setIsSubscribed] = useState(channel.isSubscribed);
     const [subscriberCount, setSubscriberCount] = useState(channel.subscriberCount);
-    const user = {
-        username: "john_doe",
-        subscribers: "1.2K Subscribers",
-        avatar: "https://i.pravatar.cc/300",
-        coverImage:
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-    };
-
-    const uploadedVideos = [
-        {
-            _id: 1,
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-            title: "React Tutorial",
-            views: "12K views",
-            duration: "10:25",
-        },
-        {
-            _id: 2,
-            thumbnail:
-                "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-            title: "Node.js Crash Course",
-            views: "8K views",
-            duration: "15:20",
-        },
-        {
-            _id: 3,
-            thumbnail:
-                "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-            title: "MongoDB Basics",
-            views: "5K views",
-            duration: "08:12",
-        },
-        {
-            _id: 4,
-            thumbnail:
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-            title: "React Tutorial",
-            views: "12K views",
-            duration: "10:25",
-        },
-        {
-            _id: 5,
-            thumbnail:
-                "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-            title: "Node.js Crash Course",
-            views: "8K views",
-            duration: "15:20",
-        },
-        {
-            _id: 6,
-            thumbnail:
-                "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-            title: "MongoDB Basics",
-            views: "5K views",
-            duration: "08:12",
-        },
-    ];
+    const [uploadedVideos, setUploadedVideos] = useState([]);
 
 
     const handleSubscribedClick = async (e) => {
@@ -80,6 +27,20 @@ function MainProfileOfUser(incomingChannel) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+            const fetchUploadedVideos = async () => {
+                try {
+                    const uploadedVideoResponse = await getVideobyUserId(channel._id);
+                    setUploadedVideos(uploadedVideoResponse);
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+            fetchUploadedVideos();
+        }, [incomingChannel]);
 
     return (
         <div className="min-h-screen bg-gray-100 py-6">
@@ -150,7 +111,7 @@ function MainProfileOfUser(incomingChannel) {
                             {uploadedVideos.map((video) => (
                                 <VideoCard
                                     key={video._id}
-                                    thumbnail={video.thumbnail}
+                                    thumbnail={video.thumbnail.url}
                                     title={video.title}
                                     views={video.views}
                                     duration={video.duration}

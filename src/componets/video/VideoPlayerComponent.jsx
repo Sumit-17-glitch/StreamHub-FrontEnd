@@ -56,7 +56,7 @@ function VideoPlayerComponent({ video }) {
                         src={video?.owner?.avatar?.url}
                         alt="avatar"
                         className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                        onClick={navigate(`/profile/${video?.owner?.userName}`)}
+                        onClick={() => navigate(`/profile/${video?.owner?.userName}`)}
                     />
                     <div>
                         <h3 className="text-black font-semibold text-sm">

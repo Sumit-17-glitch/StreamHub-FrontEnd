@@ -56,6 +56,14 @@ export const getUserChannel = async (userName) => {
   return data.data;
 };
 
+export const getUserWatchHistory = async() => {
+  const response = await fetch(`${API_BASE_URL}/users/get-user-watch-history`, {
+    credentials: "include"
+  })
+  const data = await response.json();
+  return data.data;
+}
+
 
 // video api calls
 export const getAllVideos = async (query, page, limit) => {
