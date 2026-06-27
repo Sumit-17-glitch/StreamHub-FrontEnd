@@ -12,7 +12,7 @@ const AllVideos = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const data = await getAllVideos(1, 10);
+                const data = await getAllVideos("" ,1, 10); //since initially there is no query
                 setVideos(data);
             } catch (error) {
                 console.log(error);

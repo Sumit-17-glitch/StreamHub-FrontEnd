@@ -4,9 +4,15 @@ import { useNavigate } from "react-router-dom";
 function VideoRecommendationCard({ video }) {
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    console.log("clicked");
+    
+    navigate(`/video-player/${video._id}`);
+  }
+
   return (
     <div
-      onClick={() => navigate(`/video-player/${video._id}`)}
+      onClick={handleClick}
       className="flex gap-2 cursor-pointer hover:bg-[#d1d0d0] rounded-xl p-2 transition"
     >
       {/* Thumbnail */}
@@ -20,7 +26,7 @@ function VideoRecommendationCard({ video }) {
 
       {/* Info */}
       <div className="flex flex-col justify-start min-w-0 pt-1 gap-1">
-        <h3 className="text-white text-sm font-semibold line-clamp-2 leading-snug">
+        <h3 className="text-black text-sm font-semibold line-clamp-2 leading-snug">
           {video?.title}
         </h3>
         <p className="text-[#aaaaaa] text-xs">

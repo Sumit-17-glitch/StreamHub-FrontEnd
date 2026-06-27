@@ -1,8 +1,24 @@
 // VideoPlayer.jsx
 import React, { useState } from "react";
+import { updateViewsAndWatchHistory } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 function VideoPlayerComponent({ video }) {
+    const navigate = useNavigate();
     const [likeCount, setLikeCount] = useState(1);
+    const [viewConted, setViewConted] = useState(false);
+
+    const handleWatchTime = async (e) => {
+        const currentTime = e.target.currentTime;
+        if (currentTime >= 5 && !viewConted) {
+            setViewConted(true);
+            try {
+                await updateViewsAndWatchHistory(video._id);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
     return (
         <div className="flex flex-col gap-4">
@@ -13,6 +29,7 @@ function VideoPlayerComponent({ video }) {
                     src={video?.videoFile?.url}
                     controls
                     className="w-full aspect-video"
+                    onTimeUpdate={handleWatchTime}
                 />
             </div>
 
@@ -28,7 +45,7 @@ function VideoPlayerComponent({ video }) {
                 </p>
             </div>
             {/* Divider */}
-            
+
 
             {/* Channel row + actions */}
             <div className="flex items-center justify-between gap-3">
@@ -39,6 +56,7 @@ function VideoPlayerComponent({ video }) {
                         src={video?.owner?.avatar?.url}
                         alt="avatar"
                         className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                        onClick={navigate(`/profile/${video?.owner?.userName}`)}
                     />
                     <div>
                         <h3 className="text-black font-semibold text-sm">
@@ -51,7 +69,7 @@ function VideoPlayerComponent({ video }) {
                     </button>
                 </div>
 
-                {/* Like / Share pills */}
+                {/* Like */}
                 <div className="flex items-center gap-2">
                     <div className="flex items-center bg-[#272727] rounded-full overflow-hidden">
                         <button
@@ -59,9 +77,6 @@ function VideoPlayerComponent({ video }) {
                             className="flex items-center gap-2 px-4 py-2 text-white text-sm hover:bg-[#3f3f3f] transition border-r border-[#444]"
                         >
                             👍 {likeCount}
-                        </button>
-                        <button className="px-4 py-2 text-white text-sm hover:bg-[#3f3f3f] transition">
-                            👎
                         </button>
                     </div>
                 </div>

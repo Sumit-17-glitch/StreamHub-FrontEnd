@@ -13,6 +13,11 @@ const Header = () => {
     const [search, setSearch] = useState("");
     const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/search?query=${search}`);
+    }
+
 
     return (
         <nav className="bg-white shadow-md sticky top-0 z-50 w-auto">
@@ -47,13 +52,15 @@ const Header = () => {
                 )}
                 {isLoggedIn && (
                     <>
-                        <input
-                            type="text"
-                            placeholder="Search videos..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <form action="submit" onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                placeholder="Search videos..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </form>
                         <div className="hidden md:flex items-center gap-4">
                             <ProfileBtn />
                         </div>

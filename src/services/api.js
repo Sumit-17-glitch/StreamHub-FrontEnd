@@ -58,9 +58,9 @@ export const getUserChannel = async (userName) => {
 
 
 // video api calls
-export const getAllVideos = async (page, limit) => {
+export const getAllVideos = async (query, page, limit) => {
   const response = await fetch(
-    `${API_BASE_URL}/video/get-all-videos?page=${page}&limit=${limit}`,
+    `${API_BASE_URL}/video/get-all-videos?query=${query}&page=${page}&limit=${limit}`,
   );
   const data = await response.json();
   return data.data;
@@ -84,6 +84,16 @@ export const getVideobyId = async (videoId) => {
 
 export const getVideobyUserId = async (owner) => {
   const response = await fetch(`${API_BASE_URL}/video/get-all-videos-user?userId=${owner}`);
+  const data = await response.json();
+  return data.data;
+}
+
+export const updateViewsAndWatchHistory = async (videoId) => {
+  console.log(videoId);
+  
+  const response = await fetch(`${API_BASE_URL}/video/update-view-watchHistory/${videoId}`,{
+    credentials:"include"
+  });
   const data = await response.json();
   return data.data;
 }

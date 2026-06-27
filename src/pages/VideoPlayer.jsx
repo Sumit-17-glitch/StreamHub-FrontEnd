@@ -10,6 +10,7 @@ function VideoPlayer() {
   const [loading, setLoading] = useState(true);
   const [video, setVideo] = useState({});
 
+
   useEffect(() => {
     const fetchVideo = async () => {
       try {
@@ -22,7 +23,7 @@ function VideoPlayer() {
       }
     };
     fetchVideo();
-  }, []);
+  }, [videoId]);
 
   if (loading) return <Loading />;
 
