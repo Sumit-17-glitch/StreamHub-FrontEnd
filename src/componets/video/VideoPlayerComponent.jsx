@@ -1,12 +1,15 @@
 // VideoPlayer.jsx
-import React, { useState } from "react";
-import { updateViewsAndWatchHistory } from "../../services/api";
+import React, { useEffect, useState } from "react";
+import { getSubsciberCount, updateViewsAndWatchHistory } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
 
 function VideoPlayerComponent({ video }) {
     const navigate = useNavigate();
     const [likeCount, setLikeCount] = useState(1);
     const [viewConted, setViewConted] = useState(false);
+    const [subscriberCount, setSubscriberCount] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const handleWatchTime = async (e) => {
         const currentTime = e.target.currentTime;
@@ -18,6 +21,26 @@ function VideoPlayerComponent({ video }) {
                 console.log(error);
             }
         }
+    }
+
+    useEffect(() => {
+        const fetchSubscriberCount = async () => {
+            try {
+                const fetchedSubscriberCount = getSubsciberCount(video.owner.userName);
+                setSubscriberCount(fetchedSubscriberCount);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchSubscriberCount();
+    },[video]);
+
+    if(loading){
+        return (
+            <Loading />
+        )
     }
 
     return (
@@ -62,7 +85,7 @@ function VideoPlayerComponent({ video }) {
                         <h3 className="text-black font-semibold text-sm">
                             {video?.owner?.userName}
                         </h3>
-                        <p className="text-[#aaaaaa] text-xs">subscribers</p>
+                        <p className="text-[#aaaaaa] text-xs">{subscriberCount} subscribers</p>
                     </div>
                     <button className="ml-3 px-5 py-2 rounded-full bg-gray-200 text-black text-sm font-bold hover:bg-gray-300 transition">
                         Subscribe

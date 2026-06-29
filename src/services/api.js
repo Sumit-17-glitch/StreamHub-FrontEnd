@@ -113,3 +113,9 @@ export const subscribeToChannel = async (channelUserName) => {
   const data = await response.json();
   return data;
 };
+
+export const getSubsciberCount = async (channelUserName) => {
+  const response = await fetch(`${API_BASE_URL}/subscription/subscribers/${channelUserName}`)
+  const data = await response.json();
+  return data.data.subscriberCount;
+};
