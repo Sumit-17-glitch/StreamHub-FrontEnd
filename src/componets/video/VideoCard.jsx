@@ -62,7 +62,7 @@ const VideoCard = ({
                     </h2>
 
                     <p className="text-sm text-gray-500 mt-1">
-                        {views}
+                        {views} views
                     </p>
                 </div>
             </div>

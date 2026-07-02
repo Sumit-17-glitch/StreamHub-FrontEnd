@@ -143,6 +143,7 @@ function MainProfileOfOwner(incomingChannel) {
 
                                     <VideoCard
                                         key={video._id}
+                                        videoId={video._id}
                                         thumbnail={video.thumbnail.url}
                                         avatar={channel.avatar.url}
                                         title={video.title}
