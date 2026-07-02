@@ -1,8 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
+import { updateAvatar, updateCoverImage, updateUserDetail } from '../services/api';
+import { formatProdErrorMessage } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/auth.slice';
 
 function ProfileUpdate() {
-  const [formData, setFormData] = useState({
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
         userName: "",
         email: "",
     });
@@ -38,25 +43,21 @@ function ProfileUpdate() {
         setCoverPreview(URL.createObjectURL(file));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        let updatedUser;
+        try {
+            if (formData.userName || formData.email) updatedUser = await updateUserDetail(formData.userName, formData.email);
+            if (avatar) updatedUser = await updateAvatar(avatar);
+            if (coverImage) updateAvatar = await updateCoverImage(coverImage);
 
-        const data = new FormData();
+            console.log(updatedUser);
 
-        data.append("userName", formData.userName);
-        data.append("email", formData.email);
+            useDispatch(auth.login(updatedUser));
 
-        if (avatar) {
-            data.append("avatar", avatar);
+        } catch (error) {
+            console.log(error);
         }
-
-        if (coverImage) {
-            data.append("coverImage", coverImage);
-        }
-
-        console.log(data);
-
-        // API Call Here
     };
 
     return (

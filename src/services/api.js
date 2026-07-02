@@ -62,7 +62,54 @@ export const getUserWatchHistory = async() => {
   })
   const data = await response.json();
   return data.data;
-}
+};
+
+export const updateUserDetail = async (fullName, email) => {
+  const userData = {
+    fullName, email
+  }
+  const response = await fetch(`${API_BASE_URL}/users/update-details`,{
+    method: "PATCH",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    credentials: "include",
+
+    body: JSON.stringify(userData),
+  });
+  const data = await response.json();
+  return data.data;
+};
+
+export const updateAvatar = async (avatar) => {
+  const formData = new FormData();
+
+  formData.append("avatar", avatar);
+
+  const response = await fetch(`${API_BASE_URL}/users/update-avatar`, {
+    method: "PATCH",
+    credentials: "include",
+    body: formData,
+  });
+  const data = await response.json();
+  return data.data;
+};
+
+export const updateCoverImage = async (coverImage) => {
+  const formData = new FormData();
+
+  formData.append("coverImage", coverImage);
+
+  const response = await fetch(`${API_BASE_URL}/users/update-cover-image`, {
+    method: "PATCH",
+    credentials: "include",
+    body: formData,
+  });
+  const data = await response.json();
+  return data.data;
+};
 
 
 // video api calls
