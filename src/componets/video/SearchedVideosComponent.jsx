@@ -11,9 +11,8 @@ function SearchedVideosComponent(params) {
   useEffect(()=>{
     const fetchVideos = async () => {
                 try {
-                    const data = await getAllVideos(newParams.query , newParams.page, newParams.limit);
-                    setVideos([]); 
-                    setVideos(data);
+                    const data = await getAllVideos(newParams.query , newParams.page, newParams.limit); 
+                    setVideos(data.videos);
                 } catch (error) {
                     console.log(error);
                 }finally{

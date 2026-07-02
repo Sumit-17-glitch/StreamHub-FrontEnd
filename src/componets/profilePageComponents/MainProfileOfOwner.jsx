@@ -100,7 +100,10 @@ function MainProfileOfOwner(incomingChannel) {
                                 {/* Buttons */}
                                 <div className="flex flex-wrap gap-3 mt-4">
 
-                                    <button className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                                    <button
+                                        className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+                                        onClick={() => navigate("/profile-update")}
+                                    >
                                         Edit Profile
                                     </button>
 

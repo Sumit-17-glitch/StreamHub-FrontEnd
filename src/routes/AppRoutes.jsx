@@ -9,6 +9,7 @@ import Profile from '../pages/Profile';
 import UploadVideo from '../pages/UploadVideo';
 import VideoPlayer from '../pages/VideoPlayer';
 import SearchedVideos from '../pages/SearchedVideos';
+import ProfileUpdate from '../pages/ProfileUpdate';
 
 function AppRoutes() {
     return (
@@ -22,6 +23,7 @@ function AppRoutes() {
                 <Route path='/upload-video' element={<UploadVideo />} />
                 <Route path='/video-player/:videoId' element={<VideoPlayer />} />
                 <Route path='/search' element={<SearchedVideos />} />
+                <Route path='/profile-update' element={<ProfileUpdate />} />
             </Route>
         </Routes>
     )

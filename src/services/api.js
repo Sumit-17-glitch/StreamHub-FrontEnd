@@ -69,6 +69,7 @@ export const getUserWatchHistory = async() => {
 export const getAllVideos = async (query, page, limit) => {
   const response = await fetch(
     `${API_BASE_URL}/video/get-all-videos?query=${query}&page=${page}&limit=${limit}`,
+    // 'https://streamhub-backend.up.railway.app/api/v1/video/get-all-videos?page=1&limit=10'
   );
   const data = await response.json();
   return data.data;
